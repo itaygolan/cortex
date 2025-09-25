@@ -15,7 +15,7 @@ class Parameter(cortex.Tensor):
         dtype: Optional[Type] = None,
         operation: Operation = None,
     ):
-        if isinstance(self, cortex.Tensor):
+        if isinstance(data, cortex.Tensor):
             super().__init__(
                 data.data,
                 dtype=data.dtype,
@@ -54,19 +54,23 @@ class Module:
                 if param.requires_grad:
                     yield param
 
+    def modules(self) -> Generator:
+        """Returns all submodules as an iterable."""
+        for _, param in self.__dict__.items():
+            if isinstance(param, Module):
+                yield param
+
     def train(self):
         self.training = True
 
-        for param in self.parameters():
-            if isinstance(param, Module):
-                param.train()
+        for module in self.modules():
+            module.train()
 
     def eval(self):
         self.training = False
 
-        for param in self.parameters():
-            if isinstance(param, Module):
-                param.eval()
+        for module in self.modules():
+            module.eval()
 
 
 class Sequential(Module):

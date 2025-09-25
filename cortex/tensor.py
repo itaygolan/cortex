@@ -99,6 +99,14 @@ class Tensor:
             for inp in self.operation.parents:
                 inp.zero_grad_tree(set_to_none)
 
+    def copy(self):
+        return Tensor(
+            self.data.copy(),
+            dtype=self.dtype,
+            requires_grad=self.requires_grad,
+            operation=self.operation,
+        )
+
     def transpose(self, *dims: int):
         from cortex.operations import Transpose
 
@@ -237,7 +245,7 @@ class Tensor:
         from cortex.operations import Add
 
         op = Add()
-        return op.forward(self, tensor(other))
+        return op.forward(tensor(other), self)
 
     def __iadd__(self, other):
         from cortex.operations import Add
@@ -255,7 +263,7 @@ class Tensor:
         return self + -tensor(other)
 
     def __rsub__(self, other: Tensor):
-        return self + -tensor(other)
+        return tensor(other) + -self
 
     def __isub__(self, other: Tensor):
         return self + -tensor(other)
@@ -288,7 +296,7 @@ class Tensor:
         from cortex.operations import Div
 
         op = Div()
-        return op.forward(self, tensor(other))
+        return op.forward(tensor(other), self)
 
     def __itruediv__(self, other: Tensor):
         from cortex.operations import Div

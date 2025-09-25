@@ -15,4 +15,4 @@ class ReLU(Module):
     """ReLU activation function."""
 
     def forward(self, x: Tensor):
-        return x.set(x < 0, 0)
+        return x.set(x <= 0, 0)
