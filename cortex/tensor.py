@@ -38,7 +38,7 @@ class Tensor:
 
         if grad is None:
             # If grad is None, the gradient with respect to itself is 1
-            grad = np.ones_like(self.data)
+            grad = np.ones_like(self.data, dtype=np.float64)
 
         # Step 1: Set gradient of tensor to passed gradient
         self.grad += grad
@@ -89,7 +89,7 @@ class Tensor:
         return self
 
     def zero_grad(self, set_to_none: bool = False):
-        self.grad = None if set_to_none else np.zeros_like(self.data)
+        self.grad = None if set_to_none else np.zeros_like(self.data, dtype=np.float64)
 
     def zero_grad_tree(self, set_to_none: bool = False):
         """Zero grad the entire compute graph."""
@@ -315,7 +315,7 @@ class Tensor:
 
 
 def tensor(
-    data: GenericListLike,
+    data: Any,
     dtype: Optional[Type] = None,
     requires_grad: bool = False,
 ):
