@@ -17,6 +17,8 @@ from cortex.tensor import (
     randn_like,
     stack,
     tensor,
+    uniform,
+    uniform_like,
     zeros,
     zeros_like,
 )
@@ -38,6 +40,8 @@ __all__ = [
     "randn_like",
     "stack",
     "tensor",
+    "uniform",
+    "uniform_like",
     "zeros",
     "zeros_like",
     "visualize_graph",

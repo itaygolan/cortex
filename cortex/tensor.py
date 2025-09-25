@@ -408,6 +408,21 @@ def rand_like(tensor: Tensor):
     )
 
 
+def uniform(low: int, high: int, shape: tuple[int], requires_grad: bool = False):
+    data = np.random.uniform(low, high, shape)
+    return Tensor(data, requires_grad=requires_grad)
+
+
+def uniform_like(low: int, high: int, tensor: Tensor):
+    data = np.random.uniform(low, high, tensor.shape)
+    return Tensor(
+        data,
+        requires_grad=tensor.requires_grad,
+        dtype=tensor.dtype,
+        operation=tensor.operation,
+    )
+
+
 def randint(low: int, high: int, shape: tuple[int], requires_grad: bool = False):
     data = np.random.randint(low, high, shape)
     return Tensor(data, requires_grad=requires_grad)
