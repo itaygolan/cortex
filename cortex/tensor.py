@@ -1,10 +1,8 @@
 from __future__ import annotations
 
-from typing import TYPE_CHECKING, Iterable, Optional, Type, Union
+from typing import TYPE_CHECKING, Any, Iterable, Optional, Type, Union
 
 import numpy as np
-
-from cortex.custom_typing import GenericListLike
 
 if TYPE_CHECKING:
     from cortex.operations import Operation
@@ -13,7 +11,7 @@ if TYPE_CHECKING:
 class Tensor:
     def __init__(
         self,
-        data: GenericListLike,
+        data: Any,
         dtype: Optional[Type] = None,
         requires_grad: bool = False,
         operation: Operation = None,

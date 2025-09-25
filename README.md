@@ -12,7 +12,7 @@ Cortex is a custom autograd framework, similar to PyTorch, built in Python for e
 ## Getting started
 
 ```bash
-git clone <repo>
+git clone git@github.com:itaygolan/cortex.git && cd cortex
 pip install -e ".[all]"
 ```
 

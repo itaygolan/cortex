@@ -1,11 +1,12 @@
 from __future__ import annotations
 
 from abc import ABC, abstractmethod
-from typing import Any, Optional, Union
+from typing import TYPE_CHECKING, Any, Optional, Union
 
 import numpy as np
 
-from cortex.tensor import Tensor
+if TYPE_CHECKING:
+    from cortex.tensor import Tensor
 
 
 class Operation(ABC):

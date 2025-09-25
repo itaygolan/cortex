@@ -18,7 +18,10 @@ class SGD(Optimizer):
         nesterov: bool = False,
     ):
         defaults = dict(
-            lr=lr, weight_decay=weight_decay, momentum=momentum, nesterov=nesterov
+            lr=lr,
+            weight_decay=weight_decay,
+            momentum=momentum,
+            nesterov=nesterov,
         )
         super().__init__(parameters, defaults)
 
@@ -59,5 +62,4 @@ class SGD(Optimizer):
             else:
                 step = param_grad
 
-            param.data -= lr * step
             param.data -= lr * step

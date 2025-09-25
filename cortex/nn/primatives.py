@@ -3,7 +3,6 @@ from __future__ import annotations
 from typing import Any, Generator, Optional, Type
 
 import cortex
-from cortex.custom_typing import GenericListLike
 from cortex.operations import Operation
 
 
@@ -12,7 +11,7 @@ class Parameter(cortex.Tensor):
 
     def __init__(
         self,
-        data: GenericListLike,
+        data: Any,
         dtype: Optional[Type] = None,
         operation: Operation = None,
     ):
