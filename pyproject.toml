@@ -1,0 +1,32 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "cortex"
+version = "0.1.0"
+description = "A custom autograd framework for educational purposes, similar to PyTorch"
+readme = "README.md"
+requires-python = ">=3.11"
+keywords = [
+    "autograd",
+    "deep-learning",
+    "educational",
+    "pytorch",
+    "machine-learning",
+]
+dependencies = ["numpy>=2.0.0"]
+
+[project.optional-dependencies]
+dev = ["black>=25.0.0", "isort>=6.0.0", "pytest>=8.0.0", "mypy>=1.0.0"]
+jupyter = [
+    "jupyterlab>=4.0.0",
+    "ipython>=8.0.0",
+    "jupyter-black>=0.4.0",
+    "ptpython>=3.0.0",
+]
+visualization = ["graphviz>=0.20.0", "matplotlib>=3.5.0"]
+all = ["cortex[dev,jupyter,visualization]"]
+
+[tool.setuptools.packages.find]
+where = ["cortex"]
