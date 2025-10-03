@@ -60,6 +60,16 @@ class Module:
             if isinstance(param, Module):
                 yield param
 
+    def named_parameters(self, prefix: str = "") -> Generator:
+        for name, param in self.__dict__.items():
+            if isinstance(param, Module):
+                yield from param.named_parameters(prefix=f"{prefix}{name}.")
+            elif isinstance(param, Parameter):
+                yield prefix + name, param
+            elif isinstance(param, cortex.Tensor):
+                if param.requires_grad:
+                    yield prefix + name, param
+
     def train(self):
         self.training = True
 
@@ -83,6 +93,10 @@ class Sequential(Module):
     def parameters(self):
         for module in self.modules:
             yield from module.parameters()
+
+    def named_parameters(self):
+        for i, module in enumerate(self.modules):
+            yield from module.named_parameters(prefix=f"{i}.")
 
     def forward(self, *args: Any):
         inputs: tuple[Any, ...] = args

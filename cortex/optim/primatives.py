@@ -44,6 +44,8 @@ class Optimizer(ABC):
 
     def add_param_group(self, group: dict[str, Any]):
         assert "params" in group
+        for k, v in self.defaults.items():
+            group.setdefault(k, v)
         self.param_groups.append(group)
 
     def parameters(self):

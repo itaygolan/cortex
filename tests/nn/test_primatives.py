@@ -60,6 +60,18 @@ def test_module_call():
     assert np.allclose(output.data, expected_output)
 
 
+def test_module_named_parameters():
+    """
+    Tests that the named_parameters() method correctly identifies tensors that require gradients.
+    """
+    module = SimpleModule()
+    named_params = list(module.named_parameters())
+    assert len(named_params) == 2
+
+    assert named_params[0][0] == "param1"
+    assert named_params[1][0] == "tensor_grad"
+
+
 def test_module_parameters():
     """
     Tests that the parameters() method correctly identifies tensors that require gradients.
@@ -84,6 +96,19 @@ def test_nested_module_parameters():
     assert [1.0, 2.0] in param_datas  # from sub_module.param1
     assert [3.0, 4.0] in param_datas  # from sub_module.tensor_grad
     assert [7.0, 8.0] in param_datas  # from param2
+
+
+def test_nested_module_named_parameters():
+    """
+    Tests that the named_parameters() method correctly identifies tensors that require gradients.
+    """
+    module = NestedModule()
+    named_params = list(module.named_parameters())
+    assert len(named_params) == 3
+
+    assert named_params[0][0] == "sub_module.param1"
+    assert named_params[1][0] == "sub_module.tensor_grad"
+    assert named_params[2][0] == "param2"
 
 
 def test_module_train_eval_mode():
@@ -139,3 +164,17 @@ def test_sequential_parameters():
     params = list(model.parameters())
     # SimpleModule has 2, Sigmoid has 0, NestedModule has 3
     assert len(params)
+
+
+def test_sequential_named_parameters():
+    """
+    Tests that a Sequential module correctly gathers named parameters from its layers.
+    """
+    model = Sequential(SimpleModule(), Sigmoid(), NestedModule())
+    named_params = list(model.named_parameters())
+    # SimpleModule has 2, Sigmoid has 0, NestedModule has 3
+    assert named_params[0][0] == "0.param1"
+    assert named_params[1][0] == "0.tensor_grad"
+    assert named_params[2][0] == "2.sub_module.param1"
+    assert named_params[3][0] == "2.sub_module.tensor_grad"
+    assert named_params[4][0] == "2.param2"
