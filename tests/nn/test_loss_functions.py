@@ -2,7 +2,8 @@ import numpy as np
 import pytest
 
 from cortex import Tensor
-from cortex.nn.loss_functions import CrossEntropyLoss, InvalidReductionOption, MSELoss
+from cortex.nn.functionals import InvalidReductionOption
+from cortex.nn.loss_functions import CrossEntropyLoss, MSELoss
 
 
 @pytest.mark.parametrize(
