@@ -137,3 +137,4 @@ celerybeat.pid
 # Others
 node_modules/      # if using any frontend tooling in repo
 *.pyc
+CLAUDE.md
